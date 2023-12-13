@@ -6,4 +6,5 @@
     <string name="cPassword">Confirm password:</string>
     <string name="btnRegister">Sign up</string>
     <string name="btnLogin">Sign in</string>
+    <string name="btnReset">Send email reset password</string>
 </resources>
