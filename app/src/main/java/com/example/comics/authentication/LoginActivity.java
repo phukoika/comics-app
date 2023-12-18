@@ -1,4 +1,4 @@
-package com.example.comics;
+package com.example.comics.authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,58 +12,66 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comics.MainActivity;
+import com.example.comics.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class RegisterActivity extends AppCompatActivity {
-    private Button btnRegister;
-    private TextView tvLogin;
-    private TextInputEditText usernameInput, emailInput, passwordInput, cPasswordInput;
+public class LoginActivity extends AppCompatActivity {
+    private Button btnLogin;
+    private TextInputEditText emailInput, passwordInput;
+    private TextView tvForgotPassword, tvRegister;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        usernameInput = findViewById(R.id.editTextUsername);
         emailInput = findViewById(R.id.editTextEmail);
         passwordInput = findViewById(R.id.editTextPassword);
-        cPasswordInput = findViewById(R.id.editTextCPassword);
-        btnRegister = findViewById(R.id.btnRegister);
-        tvLogin = findViewById(R.id.tvLogin);
-        
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register();
-            }
-        });
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
+        btnLogin = findViewById(R.id.btnLogin);
+        tvRegister = findViewById(R.id.tvRegister);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
+        tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                register();
+            }
+        });
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forgot();
+            }
+        });
     }
 
-    private void login() {
-        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+    private void forgot() {
+        Intent intent = new Intent(LoginActivity.this, ResetActivity.class);
         startActivity(intent);
     }
 
+
     private void register() {
-        String username,email, password, cPassword;
-        username = usernameInput.getText().toString();
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    private void login() {
+        String email, password;
         email = emailInput.getText().toString();
         password = passwordInput.getText().toString();
-        cPassword = cPasswordInput.getText().toString();
-        if(TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Username is required", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if(TextUtils.isEmpty(email)) {
             Toast.makeText(this, "Email is required", Toast.LENGTH_SHORT).show();
             return;
@@ -80,23 +88,15 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password must be at least 8 characters", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(cPassword)){
-            Toast.makeText(this, "Confirm password is required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!password.equals(cPassword)) {
-            Toast.makeText(this, "Confirm password must be same as password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "Register successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Toast.makeText(LoginActivity.this,"Login successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }else {
-                    Toast.makeText(RegisterActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login failed, please check your email or password again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
