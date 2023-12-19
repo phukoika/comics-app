@@ -36,7 +36,10 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
-
+        if(mAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

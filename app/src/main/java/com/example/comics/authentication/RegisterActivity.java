@@ -110,8 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    saveUserToFirebase(email, username);
-
+                    saveUserToFirebase(username, email);
                 }else {
                     Toast.makeText(RegisterActivity.this, "Register failed", Toast.LENGTH_SHORT).show();
                 }
@@ -122,8 +121,8 @@ public class RegisterActivity extends AppCompatActivity {
         String userID = mAuth.getCurrentUser().getUid();
         DocumentReference documentReference = fStore.collection("users").document(userID);
         Map<String, Object> user = new HashMap<>();
-        user.put("Username", username);
-        user.put("Email", email);
+        user.put("username", username);
+        user.put("email", email);
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
