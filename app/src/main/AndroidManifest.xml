@@ -24,6 +24,7 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".authentication.RegisterActivity"/>
         <activity android:name=".authentication.ResetActivity"/>
+        <activity android:name=".UserActivity"/>
     </application>
 
 </manifest>

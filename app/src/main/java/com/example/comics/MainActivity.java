@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.NAV_SETTING) {
 
+                } else if (item.getItemId() == R.id.NAV_USER) {
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    startActivity(intent);
                 } else if (item.getItemId() == R.id.NAV_LOGOUT) {
                     mAuth.signOut();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);

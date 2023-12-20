@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         imageView.setImageResource(imageResource);
 
         view.setBackgroundColor(Color.parseColor(color));
-
         Toast toast = new Toast(this);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(view);
