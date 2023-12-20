@@ -1,0 +1,22 @@
+<!-- res/drawable/border_rounded_with_white_background.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+    <item
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp"
+        android:bottom="2dp">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient
+                android:startColor="@color/primary"
+                android:endColor="#9A000000"
+                android:type="linear"
+                android:angle="0"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+</layer-list>
